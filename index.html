@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancer Diagnosis Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/your_background_image.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+        }
+        h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px; /* Space between input groups */
+        }
+        .input-group {
+            flex: 1 1 calc(50% - 20px); /* Two columns for better fit */
+            margin-bottom: 15px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            background: #f9f9f9; /* Background for input groups */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for input groups */
+            border-radius: 10px; /* Rounded corners */
+            position: relative;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px); /* Adjust width to fit padding */
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: #fff; /* Background color */
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+        input[type="text"].error {
+            border-color: red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            position: absolute;
+            bottom: -20px;
+            left: 10px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for button */
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #007BFF;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px; /* Rounded corners */
+            background: rgba(0, 123, 255, 0.1); /* Light background for result */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for result */
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .input-group {
+                flex: 1 1 100%; /* Single column on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cancer Diagnosis Prediction</h2>
+        <form id="predictionForm" action="/predict" method="post">
+            <!-- Input fields for 30 features -->
+            <div class="input-group">
+                <label for="feature1">Radius Mean:</label>
+                <input type="text" id="feature1" name="feature1" aria-label="Feature 1" required>
+                <div class="error-message" id="feature1Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature2">Texture Mean:</label>
+                <input type="text" id="feature2" name="feature2" aria-label="Feature 2" required>
+                <div class="error-message" id="feature2Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature3">Perimeter Mean:</label>
+                <input type="text" id="feature3" name="feature3" aria-label="Feature 3" required>
+                <div class="error-message" id="feature3Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature4">Area Mean:</label>
+                <input type="text" id="feature4" name="feature4" aria-label="Feature 4" required>
+                <div class="error-message" id="feature4Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature5">Smoothness Mean:</label>
+                <input type="text" id="feature5" name="feature5" aria-label="Feature 5" required>
+                <div class="error-message" id="feature5Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature6">Compactness Mean:</label>
+                <input type="text" id="feature6" name="feature6" aria-label="Feature 6" required>
+                <div class="error-message" id="feature6Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature7">Concavity Mean:</label>
+                <input type="text" id="feature7" name="feature7" aria-label="Feature 7" required>
+                <div class="error-message" id="feature7Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature8">Concave Points Mean:</label>
+                <input type="text" id="feature8" name="feature8" aria-label="Feature 8" required>
+                <div class="error-message" id="feature8Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature9">Symmetry Mean:</label>
+                <input type="text" id="feature9" name="feature9" aria-label="Feature 9" required>
+                <div class="error-message" id="feature9Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature10">Fractal Dimension Mean:</label>
+                <input type="text" id="feature10" name="feature10" aria-label="Feature 10" required>
+                <div class="error-message" id="feature10Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature11">Radius Standard Error:</label>
+                <input type="text" id="feature11" name="feature11" aria-label="Feature 11" required>
+                <div class="error-message" id="feature11Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature12">Texture Standard Error:</label>
+                <input type="text" id="feature12" name="feature12" aria-label="Feature 12" required>
+                <div class="error-message" id="feature12Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature13">Perimeter Standard Error:</label>
+                <input type="text" id="feature13" name="feature13" aria-label="Feature 13" required>
+                <div class="error-message" id="feature13Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature14">Area Standard Error:</label>
+                <input type="text" id="feature14" name="feature14" aria-label="Feature 14" required>
+                <div class="error-message" id="feature14Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature15">Smoothness Standard Error:</label>
+                <input type="text" id="feature15" name="feature15" aria-label="Feature 15" required>
+                <div class="error-message" id="feature15Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature16">Compactness Standard Error:</label>
+                <input type="text" id="feature16" name="feature16" aria-label="Feature 16" required>
+                <div class="error-message" id="feature16Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature17">Concavity Standard Error:</label>
+                <input type="text" id="feature17" name="feature17" aria-label="Feature 17" required>
+                <div class="error-message" id="feature17Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature18">Concave Points Standard Error:</label>
+                <input type="text" id="feature18" name="feature18" aria-label="Feature 18" required>
+                <div class="error-message" id="feature18Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature19">Symmetry Standard Error:</label>
+                <input type="text" id="feature19" name="feature19" aria-label="Feature 19" required>
+                <div class="error-message" id="feature19Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature20">ractal Dimension Standard Error:</label>
+                <input type="text" id="feature20" name="feature20" aria-label="Feature 20" required>
+                <div class="error-message" id="feature20Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature21">Radius Worst:</label>
+                <input type="text" id="feature21" name="feature21" aria-label="Feature 21" required>
+                <div class="error-message" id="feature21Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature22">Texture Worst:</label>
+                <input type="text" id="feature22" name="feature22" aria-label="Feature 22" required>
+                <div class="error-message" id="feature22Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature23">Perimeter Worst:</label>
+                <input type="text" id="feature23" name="feature23" aria-label="Feature 23" required>
+                <div class="error-message" id="feature23Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature24">Area Worst:</label>
+                <input type="text" id="feature24" name="feature24" aria-label="Feature 24" required>
+                <div class="error-message" id="feature24Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature25">Smoothness Worst:</label>
+                <input type="text" id="feature25" name="feature25" aria-label="Feature 25" required>
+                <div class="error-message" id="feature25Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature26">Compactness Worst:</label>
+                <input type="text" id="feature26" name="feature26" aria-label="Feature 26" required>
+                <div class="error-message" id="feature26Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature27">Concavity Worst:</label>
+                <input type="text" id="feature27" name="feature27" aria-label="Feature 27" required>
+                <div class="error-message" id="feature27Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature28">Concave Points Worst:</label>
+                <input type="text" id="feature28" name="feature28" aria-label="Feature 28" required>
+                <div class="error-message" id="feature28Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature29">Symmetry Worst:</label>
+                <input type="text" id="feature29" name="feature29" aria-label="Feature 29" required>
+                <div class="error-message" id="feature29Error"></div>
+            </div>
+            <div class="input-group">
+                <label for="feature30">Fractal Dimension Worst:</label>
+                <input type="text" id="feature30" name="feature30" aria-label="Feature 30" required>
+                <div class="error-message" id="feature30Error"></div>
+            </div>
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">
+                <h3>{{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        <p>© 2024 Cancer Prediction App. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(event) {
+            let isValid = true;
+            const inputs = document.querySelectorAll('input[type="text"]');
+
+            inputs.forEach(input => {
+                const errorElement = document.getElementById(input.id + 'Error');
+                if (!/^\d*\.?\d+$/.test(input.value)) { // Regex to allow only numbers and decimals
+                    input.classList.add('error');
+                    errorElement.textContent = 'Invalid input. Please enter a valid number.';
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                    errorElement.textContent = '';
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    </script>
+</body>
+</html>
