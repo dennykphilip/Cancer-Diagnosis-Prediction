@@ -2,5 +2,5 @@ This repository contains a machine learning model to predict whether a cancer di
 
 Features
 
-**Random Forest Classifier: Used to predict the nature of cancer (malignant or benign) based on a dataset of medical features.
-**Web Interface: A user-friendly interface that allows users to input new feature values and get predictions on whether the cancer is malignant or benign.
+Random Forest Classifier: Used to predict the nature of cancer (malignant or benign) based on a dataset of medical features.
+Web Interface: A user-friendly interface that allows users to input new feature values and get predictions on whether the cancer is malignant or benign.
